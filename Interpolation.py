@@ -1,6 +1,6 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import LinearSystems
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def cubicspline_curvatures(x_data, y_data):
@@ -46,6 +46,7 @@ def cubicspline_evaluation(x_data, y_data, k, x):
 xValues = np.array([0, 1, 2], float)
 yValues = np.array([0, 2, 1], float)
 
+
 # curvatures = cubicspline_curvatures(xValues, yValues)
 # print(cubicspline_evaluation(xValues, yValues, curvatures, 1.5))
 
@@ -60,7 +61,7 @@ def least_squares_fit(x_data, y_data, degree):
         sumb = 0
         for j in range(n):
             suma += x_data[j] ** i
-            sumb += (x_data[j] ** i)*y_data[j]
+            sumb += (x_data[j] ** i) * y_data[j]
         for j in range(degree + 1):
             for k in range(degree + 1):
                 if j + k == i:
@@ -85,7 +86,7 @@ def plotLeastSF():
     y_quadratic = x.copy()
     for i in range(len(x)):
         y_linear[i] = a_linear[0] + (a_linear[1] * x[i])
-        y_quadratic[i] = a_quadratic[0] + (a_quadratic[1] * x[i]) + (a_quadratic[2] * (x[i]**2))
+        y_quadratic[i] = a_quadratic[0] + (a_quadratic[1] * x[i]) + (a_quadratic[2] * (x[i] ** 2))
 
     # Plot
     plt.plot(x_data, y_data, 'o', x, y_linear, 'r-', x, y_quadratic, 'g-')
@@ -105,12 +106,14 @@ def multivariate_linear_regression(x1, x2, y):
     XTY = np.matmul(np.transpose(X), y)
     A = LinearSystems.choleski_solve(LinearSystems.choleski_decomposition(XTX.copy()), XTY.copy())
     Y_approx = np.matmul(X, A)
-    return Y_approx
+    return A, Y_approx
 
 
-# x1Values = np.array([1, 2, 3], float)
-# x2Values = np.array([5, 5, 4], float)
-# print(multi_variate_linear_regression(x1Values, x2Values, yValues))
-
-
-
+"""
+x1Values = np.array([0, 0, 1, 2, 2, 2], float)
+x2Values = np.array([0, 1, 0, 0, 1, 2], float)
+ymultValues = np.array([1.42, 1.85, 0.78, 0.18, 0.6, 1.05], float)
+evaluate = multivariate_linear_regression(x1Values, x2Values, ymultValues)
+print("coefficients of the polynomial: \n" + str(evaluate[0]))
+print("approximation of the initial y vector: \n" + str(evaluate[1]))
+"""
