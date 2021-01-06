@@ -42,5 +42,5 @@ yValues = np.array([1, 4, 16, 36, 64], float)
 
 # print(neville(xValues, yValues, 5))
 
-# Neville, switch x and y to get the inverse function of f(x) -> g(x)
+# Root of a function, switch x and y to get the inverse function of f(x) -> g(x)
 # Then, an approximation of the root of f(x) is the result of g(0).

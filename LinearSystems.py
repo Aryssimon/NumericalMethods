@@ -77,6 +77,23 @@ def choleski_decomposition(A):
     return A
 
 
+def choleski_solve(l, b):
+    # Forward
+    for i in range(len(b)):
+        sum = 0
+        for j in range(i):
+            sum += l[i][j] * b[j]
+        b[i] = (b[i] - sum) / l[i][i]
+    # Backward
+    u = np.transpose(l)
+    for i in range(len(b) - 1, -1, -1):
+        sum = 0
+        for j in range(len(b) - 1, i, -1):
+            sum += u[i][j] * b[j]
+        b[i] = (b[i] - sum) / u[i][i]
+    return b
+
+
 def solve_tridiagonal(c, d, e, b):
     # Forward
     for i in range(len(c)):
@@ -96,7 +113,9 @@ b_vector = np.array([15, 32, 44], float)
 # print(lu_solve(lu_decomposition(matrix), b_vector))
 
 matrix_symmetric_and_positive_definite = np.array([[2, -1, 0], [-1, 2, -1], [0, -1, 2]], float)
+b_vector_choleski = np.array([3, -1, 4], float)
 # print(choleski_decomposition(matrix_symmetric_and_positive_definite))
+# print(choleski_solve(choleski_decomposition(matrix_symmetric_and_positive_definite), b_vector_choleski))
 
 c = np.array([-1, 1, -1], float)
 d = np.array([1, 2, 1, -1], float)

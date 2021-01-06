@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import LinearSystems
 
 
@@ -73,6 +74,26 @@ def least_squares_fit(x_data, y_data, degree):
     # Solve matrix
     return np.linalg.solve(A, b)
 
+
+def plotLeastSF():
+    x_data = np.array([1.0, 1.1, 1.8, 2.2, 2.5, 3.5, 3.7, 4.0])
+    y_data = np.array([6.008, 5.257, 9.549, 11.098, 15.722, 27.130, 28.828, 33.772])
+    x = np.arange(1.0, 4.1, 0.1)
+    a_linear = least_squares_fit(x_data, y_data, 1)
+    a_quadratic = least_squares_fit(x_data, y_data, 2)
+    y_linear = x.copy()
+    y_quadratic = x.copy()
+    for i in range(len(x)):
+        y_linear[i] = a_linear[0] + (a_linear[1] * x[i])
+        y_quadratic[i] = a_quadratic[0] + (a_quadratic[1] * x[i]) + (a_quadratic[2] * (x[i]**2))
+
+    # Plot
+    plt.plot(x_data, y_data, 'o', x, y_linear, 'r-', x, y_quadratic, 'g-')
+    plt.title("Linear and Quadratic LeastSF")
+    plt.show()
+
+
+plotLeastSF()
 
 
 
