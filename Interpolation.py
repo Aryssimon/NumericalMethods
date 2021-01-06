@@ -93,7 +93,24 @@ def plotLeastSF():
     plt.show()
 
 
-plotLeastSF()
+# plotLeastSF()
+
+
+def multivariate_linear_regression(x1, x2, y):
+    x1 = x1[:, np.newaxis]
+    x2 = x2[:, np.newaxis]
+    y = y[:, np.newaxis]
+    X = np.hstack([np.ones(x1.shape), x1, x2])
+    XTX = np.matmul(np.transpose(X), X)
+    XTY = np.matmul(np.transpose(X), y)
+    A = LinearSystems.choleski_solve(LinearSystems.choleski_decomposition(XTX.copy()), XTY.copy())
+    Y_approx = np.matmul(X, A)
+    return Y_approx
+
+
+# x1Values = np.array([1, 2, 3], float)
+# x2Values = np.array([5, 5, 4], float)
+# print(multi_variate_linear_regression(x1Values, x2Values, yValues))
 
 
 
